@@ -1,6 +1,8 @@
 import Player from './src/Player.js';
 import Meteoro from './src/Meteoro.js';
 
+import Bala from './src/Bala.js';
+
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
@@ -22,6 +24,9 @@ const meteoros = [
     new Meteoro(250,50,190,200),
 ]
 
+    //Bala
+const bala = new Bala(300,100,0.5);
+
 //gameLopp => coração do Jogo
 
 function gameLopp() {
@@ -39,6 +44,9 @@ function gameLopp() {
     meteoros.forEach((meteoro)=>{
         meteoro.draw(c);
     })
+
+    //bala
+    bala.draw(c);
 }
 
 // controlar os frames
