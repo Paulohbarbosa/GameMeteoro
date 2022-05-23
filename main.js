@@ -46,10 +46,15 @@ function gameLopp() {
     //meteoro.draw(c);
     //para vários meteoros
     meteoros.forEach((meteoro)=>{
-        meteoro.draw(c);
-    })
 
-    
+        //colisão com meteoro
+        if (contreleBala.colisao(meteoro)){
+            if(meteoro.peso <= 0){
+                const index = meteoros.indexOf(meteoro);
+                meteoros.splice(index, 1);
+            }
+        }else{meteoro.draw(c)}
+    });
 }
 
 // controlar os frames

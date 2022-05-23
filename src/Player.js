@@ -35,11 +35,12 @@ export default class Player{
 
     atrirar(){
         if(this.pequenoPressionar){
-            const velocidade = 5;
             const x = this.x + this.width / 2;
             const y = this.y;
+            const velocidade = 5;
             const atraso = 10;
-            this.controleBala.tiro(x,y,velocidade,atraso);
+            const dano = 2;
+            this.controleBala.tiro(x,y,velocidade,atraso,dano);
         }
     }
 
