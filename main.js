@@ -1,7 +1,6 @@
 import Player from './src/Player.js';
 import Meteoro from './src/Meteoro.js';
-
-import Bala from './src/Bala.js';
+import ControleBala from './src/ControleBalas.js';
 
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
@@ -11,8 +10,11 @@ canvas.width = innerWidth; //500
 canvas.height = innerHeight; //600
 
 // criar os objetos para acena
+    //Contorle de Bala
+const contreleBala = new ControleBala(canvas);
+
     //player
-const player = new Player(canvas.width / 2.1, canvas.height / 1.4);
+const player = new Player(canvas.width / 2, canvas.height - 100, contreleBala);
 
     //meteoro
 //const meteoro = new Meteoro(50, 50, 10);
@@ -24,8 +26,7 @@ const meteoros = [
     new Meteoro(250,50,190,200),
 ]
 
-    //Bala
-const bala = new Bala(300,100,0.5);
+    
 
 //gameLopp => coração do Jogo
 
@@ -46,7 +47,7 @@ function gameLopp() {
     })
 
     //bala
-    bala.draw(c);
+    contreleBala.draw(c);
 }
 
 // controlar os frames

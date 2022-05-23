@@ -1,5 +1,5 @@
 export default class Player{
-    constructor(x,y){
+    constructor(x,y,controleBala){
 
         //posição na tela
         this.x = x;
@@ -11,6 +11,9 @@ export default class Player{
 
         //velocidade
         this.velocidade= 4;
+
+        //tiro
+        this.controleBala = controleBala;
 
         //entradas do tecaldo
         document.addEventListener('keydown', this.teclaPressionada);
@@ -24,7 +27,19 @@ export default class Player{
 
         //Estilo do objeto
         c.fillStyle = 'yellow';
-        c.fillRect(this.x,this.y,this.width,this.height);        
+        c.fillRect(this.x,this.y,this.width,this.height); 
+        
+        //tiro
+        this.atrirar();
+    }
+
+    atrirar(){
+        if(this.pequenoPressionar){
+            const velocidade = 1;
+            const x = this.x + this.width / 2;
+            const y = this.y;
+            this.controleBala.tiro(x,y,velocidade);
+        }
     }
 
     //mover o objeto
@@ -40,6 +55,7 @@ export default class Player{
        // if(e.code === 'ArrowDown'){this.downPressed = true}
         if(e.code === 'ArrowLeft'){this.leftPressPressed = true}
         if(e.code === 'ArrowRight'){this.rightPressed = true}
+        if(e.code === 'Space'){this.pequenoPressionar = true}
     }
 
     //Quando a tecla é solta 
@@ -48,5 +64,6 @@ export default class Player{
         //if(e.code === 'ArrowDown'){this.downPressed = false}
         if(e.code === 'ArrowLeft'){this.leftPressPressed = false}
         if(e.code === 'ArrowRight'){this.rightPressed = false}
+        if(e.code === 'Space'){this.pequenoPressionar = false}
     }
 }
