@@ -38,6 +38,9 @@ function gameLopp() {
 
     //desenhar o player
     player.draw(c);
+    
+    //bala
+    contreleBala.draw(c);
 
     //desenhar o meteoro
     //meteoro.draw(c);
@@ -46,8 +49,7 @@ function gameLopp() {
         meteoro.draw(c);
     })
 
-    //bala
-    contreleBala.draw(c);
+    
 }
 
 // controlar os frames
