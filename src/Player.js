@@ -31,23 +31,23 @@ export default class Player{
 
     //mover o objeto
     mover() {
-        if(this.downPressed){this.y += this.velocidade}
-        if(this.upPressed){this.y -= this.velocidade}
+        //if(this.downPressed){this.y += this.velocidade}
+        //if(this.upPressed){this.y -= this.velocidade}
         if(this.leftPressPressed){this.x -= this.velocidade}
         if(this.rightPressed){this.x += this.velocidade}
     }
     //quando a tecla é pressionada
     teclaPressionada =(e) => {
-        if(e.code === 'ArrowUp'){this.upPressed = true}
-        if(e.code === 'ArrowDown'){this.downPressed = true}
+       // if(e.code === 'ArrowUp'){this.upPressed = true}
+       // if(e.code === 'ArrowDown'){this.downPressed = true}
         if(e.code === 'ArrowLeft'){this.leftPressPressed = true}
         if(e.code === 'ArrowRight'){this.rightPressed = true}
     }
 
     //Quando a tecla é solta 
     teclaSolta =(e) => {
-        if(e.code === 'ArrowUp'){this.upPressed = false}
-        if(e.code === 'ArrowDown'){this.downPressed = false}
+        //if(e.code === 'ArrowUp'){this.upPressed = false}
+        //if(e.code === 'ArrowDown'){this.downPressed = false}
         if(e.code === 'ArrowLeft'){this.leftPressPressed = false}
         if(e.code === 'ArrowRight'){this.rightPressed = false}
     }
