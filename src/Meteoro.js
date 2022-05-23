@@ -1,12 +1,12 @@
 export default class Meteoro{
-    constructor(x,y){
+    constructor(x,y,width,height){
         //posição na tela
         this.x = x;
         this.y = y;
 
         //tamanho do objeto
-        this.width = 200;
-        this.height = 200;
+        this.width = width;
+        this.height = height;
 
         //peso do meteoro
         this.peso = (this.width + this.height) / 2;

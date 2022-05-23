@@ -13,10 +13,14 @@ canvas.height = innerHeight; //600
 const player = new Player(canvas.width / 2.1, canvas.height / 1.4);
 
     //meteoro
-const meteoro = new Meteoro(50, 50, 10);
+//const meteoro = new Meteoro(50, 50, 10);
 
-
-
+    //vários meteoros
+const meteoros = [
+    new Meteoro(50,50,100,120),
+    new Meteoro(50,250,90,40),
+    new Meteoro(250,50,190,200),
+]
 
 //gameLopp => coração do Jogo
 
@@ -30,7 +34,11 @@ function gameLopp() {
     player.draw(c);
 
     //desenhar o meteoro
-    meteoro.draw(c);
+    //meteoro.draw(c);
+    //para vários meteoros
+    meteoros.forEach((meteoro)=>{
+        meteoro.draw(c);
+    })
 }
 
 // controlar os frames

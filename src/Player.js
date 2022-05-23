@@ -24,9 +24,7 @@ export default class Player{
 
         //Estilo do objeto
         c.fillStyle = 'yellow';
-        c.fillRect(this.x,this.y,this.width,this.height);
-
-        
+        c.fillRect(this.x,this.y,this.width,this.height);        
     }
 
     //mover o objeto
