@@ -15,7 +15,7 @@ canvas.height = 600; //innerHeight
 const contreleBala = new ControleBala();
 
     //player
-const player = new Player(canvas.width / 2, canvas.height - 100, contreleBala);
+const player = new Player(canvas, contreleBala);
 
     //meteoro
 //const meteoro = new Meteoro(50, 50, 10);

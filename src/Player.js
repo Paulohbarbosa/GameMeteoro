@@ -1,13 +1,13 @@
 export default class Player{
-    constructor(x,y,controleBala){
+    constructor(canvas,controleBala){
 
         //posição na tela
-        this.x = x;
-        this.y = y;
+        //this.x = x;
+        //this.y = y;
 
         //tamnho do objeto
-        this.width = 50;
-        this.height = 50;
+        //this.width = 50;
+        //this.height = 50;
 
         //velocidade
         this.velocidade = 4;
@@ -18,6 +18,21 @@ export default class Player{
         //entradas do tecaldo
         document.addEventListener('keydown', this.teclaPressionada);
         document.addEventListener('keyup', this.teclaSolta);
+
+        //imagens
+        const image = new Image();
+        image.src = './src/imgs/t.png'
+
+        image.onload = () =>{
+            const escala = 0.3;
+            this.image = image
+            this.width = image.width * escala
+            this.height = image.height * escala
+            this.posicao= {
+                x: canvas.width /2 - this.width /2,
+                y: canvas.height - this.height - 50
+            }
+        }
     }
 
     draw(c) {
@@ -26,8 +41,12 @@ export default class Player{
         this.mover();
 
         //Estilo do objeto
-        c.fillStyle = 'yellow';
-        c.fillRect(this.x,this.y,this.width,this.height); 
+       // c.fillStyle = 'yellow';
+        //c.fillRect(this.x,this.y,this.width,this.height); 
+
+        if(this.image){
+            c.drawImage(this.image, this.posicao.x, this.posicao.y, this.width,this.height)
+        }
         
         //tiro
         this.atrirar();
@@ -36,8 +55,8 @@ export default class Player{
     // atirar
     atrirar(){
         if(this.espacoPressionar){
-            const x = this.x + this.width / 2;
-            const y = this.y;
+            const x = this.posicao.x + this.width / 2;
+            const y = this.posicao.y;
             const velocidade = 5;
             const atraso = 10;
             const dano = 2;
@@ -49,8 +68,8 @@ export default class Player{
     mover() {
         //if(this.downPressed){this.y += this.velocidade}
         //if(this.upPressed){this.y -= this.velocidade}
-        if(this.leftPressPressed){this.x -= this.velocidade}
-        if(this.rightPressed){this.x += this.velocidade}
+        if(this.leftPressPressed){this.posicao.x -= this.velocidade}
+        if(this.rightPressed){this.posicao.x += this.velocidade}
     }
     //quando a tecla é pressionada
     teclaPressionada =(e) => {
