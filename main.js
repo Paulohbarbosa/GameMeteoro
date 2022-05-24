@@ -2,16 +2,17 @@ import Player from './src/Player.js';
 import Meteoro from './src/Meteoro.js';
 import ControleBala from './src/ControleBalas.js';
 
+//capiturar a area de redenização do jogo
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 //definir o tamanho da tela
-canvas.width = innerWidth; //500
-canvas.height = innerHeight; //600
+canvas.width = 550; //innerWidth
+canvas.height = 600; //innerHeight
 
 // criar os objetos para acena
     //Contorle de Bala
-const contreleBala = new ControleBala(canvas);
+const contreleBala = new ControleBala();
 
     //player
 const player = new Player(canvas.width / 2, canvas.height - 100, contreleBala);
@@ -26,7 +27,6 @@ const meteoros = [
     new Meteoro(250,50,190,200),
 ]
 
-    
 
 //gameLopp => coração do Jogo
 
@@ -44,9 +44,9 @@ function gameLopp() {
 
     //desenhar o meteoro
     //meteoro.draw(c);
+
     //para vários meteoros
     meteoros.forEach((meteoro)=>{
-
         //colisão com meteoro
         if (contreleBala.colisao(meteoro)){
             if(meteoro.peso <= 0){

@@ -10,7 +10,7 @@ export default class Player{
         this.height = 50;
 
         //velocidade
-        this.velocidade= 4;
+        this.velocidade = 4;
 
         //tiro
         this.controleBala = controleBala;
@@ -33,8 +33,9 @@ export default class Player{
         this.atrirar();
     }
 
+    // atirar
     atrirar(){
-        if(this.pequenoPressionar){
+        if(this.espacoPressionar){
             const x = this.x + this.width / 2;
             const y = this.y;
             const velocidade = 5;
@@ -57,7 +58,7 @@ export default class Player{
        // if(e.code === 'ArrowDown'){this.downPressed = true}
         if(e.code === 'ArrowLeft'){this.leftPressPressed = true}
         if(e.code === 'ArrowRight'){this.rightPressed = true}
-        if(e.code === 'Space'){this.pequenoPressionar = true}
+        if(e.code === 'Space'){this.espacoPressionar = true}
     }
 
     //Quando a tecla é solta 
@@ -66,6 +67,6 @@ export default class Player{
         //if(e.code === 'ArrowDown'){this.downPressed = false}
         if(e.code === 'ArrowLeft'){this.leftPressPressed = false}
         if(e.code === 'ArrowRight'){this.rightPressed = false}
-        if(e.code === 'Space'){this.pequenoPressionar = false}
+        if(e.code === 'Space'){this.espacoPressionar = false}
     }
 }

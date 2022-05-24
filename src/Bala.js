@@ -10,12 +10,12 @@ export default class Bala{
 
         //dimensões
         this.width = 5;
-        this.height = 15;
+        this.height = 5;
     }
     draw(c){
         c.fillStyle = 'red';
         this.y -= this.velocidade;
-        c.fillRect(this.x,this.y,this.width,this.height);
+        c.fillRect(this.x,this.y - this.height,this.width,this.height);
     }
 
     colisao(meteoro){

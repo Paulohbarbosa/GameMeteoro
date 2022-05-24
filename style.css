@@ -1,3 +1,14 @@
 body{
-    margin: 0px;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+p{
+    z-index: 10;
+    color: yellow;
+    margin: 10 px;
+    font-family: sans-serif;
+    font-size: 16px;
 }

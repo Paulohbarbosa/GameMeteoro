@@ -1,11 +1,14 @@
 import Bala from './Bala.js';
 
+//fazer o score
+const scoreEl = document.querySelector('#score');
+let score = 0;
+
 export default class ControleBalas {
     balas = [];
     atrasoNoTiro = 0;
 
-    constructor(canvas) {
-        this.canvas = canvas;
+    constructor() {
     }
 
     tiro(x, y,velocidade,atraso,dano) {
@@ -34,6 +37,11 @@ export default class ControleBalas {
         return this.balas.some((bala) =>{
             if(bala.colisao(meteoro)){
                 this.balas.splice(this.balas.indexOf(bala), 1);
+
+                 //score implementação
+                 score += 100;
+                 scoreEl.innerHTML = score;
+
                 return true;
             }
             return false;
