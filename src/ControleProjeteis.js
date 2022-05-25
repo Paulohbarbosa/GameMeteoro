@@ -21,8 +21,6 @@ export default class ControleProjeteis {
     }
 
     draw(c) {
-        //console.log(this.projeteis.length);
-
         this.projeteis.forEach((projetil) => {
             //limpar os tiros da memoria
             if(this.seprojeteisSairamDaTela(projetil)){
@@ -37,11 +35,9 @@ export default class ControleProjeteis {
         return this.projeteis.some((projetil) =>{
             if(projetil.colisao(meteoro)){
                 this.projeteis.splice(this.projeteis.indexOf(projetil), 1);
-
                  //score implementação
                  score += 100;
                  scoreEl.innerHTML = score;
-
                 return true;
             }
             return false;

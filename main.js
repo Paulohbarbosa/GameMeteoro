@@ -23,15 +23,19 @@ const player = new Player(canvas, controleProjetil);
 
     //vários meteoros
 const meteoros = [
-    new Meteoro(50,50,100),
-    new Meteoro(150,250,90),
-    new Meteoro(250,50,190),
+    new Meteoro(50,0,100,0.5),
+    new Meteoro(250,0,50, 0.8),
+    new Meteoro(550,-200,50, 0.8),
+    new Meteoro(450,0,190, 0.2),
 ]
 
+let game = {
+    ativo: true
+}
+
 //gameLopp => coração do Jogo
-
 function gameLopp() {
-
+    if(!game.ativo) return
     //estilo do plano de fundo do game
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height);
@@ -55,6 +59,21 @@ function gameLopp() {
                 meteoros.splice(index, 1);
             }
         }else{meteoro.draw(c)}
+
+        //chocar com play
+
+        if(meteoro.posicaoNaTela.y + meteoro.altura >= player.pTela.y &&
+            meteoro.posicaoNaTela.x + meteoro.largura >= player.pTela.x && 
+            meteoro.posicaoNaTela.x <= player.pTela.x + player.largura &&
+            meteoro.posicaoNaTela.y <= player.pTela.y + player.altura){
+                console.log("perdeu");
+                player.intacto = false;
+
+                setTimeout(() =>{
+                    game.ativo = false;
+                },2000)
+                
+        }
     });
 }
 

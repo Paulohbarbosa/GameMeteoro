@@ -1,11 +1,15 @@
 export default class Meteoro{   
-    constructor(pTelaX,pTelaY,peso){
+    constructor(pTelaX,pTelaY,peso, velocidade){
         //peso do meteoro
         this.peso = peso;
+
+        //velocidade
+        this.velocidade = velocidade;
 
         //imagens
        const image = new Image();
        image.src = './src/imgs/cometa.png'
+
        this.escala = 0.2
 
         image.onload = () =>{
@@ -15,23 +19,22 @@ export default class Meteoro{
                 y:0,
             }
             this.tRecorte ={
-                x:580,
+                x:610,
                 y:1087
             }
             this.posicaoNaTela ={
                 x: pTelaX,
-                y: pTelaY
+                y: pTelaY - 500
             }
-            this.largura = this.tRecorte.x * this.escala
-            this.altura = this.tRecorte.y * this.escala
+            this.largura = (this.tRecorte.x * this.escala)  + this.peso /2
+            this.altura = (this.tRecorte.y * this.escala) + this.peso /2
         }
     }
 
     draw(c){
-        
+        this.posicaoNaTela.y += this.velocidade
         //imagem do meteoro
         if(this.image){
-            //c.drawImage(this.image,0,0,580,1087,10,10,580*0.2,1087*0.2);
             c.drawImage(
                 this.image,
                 this.recorte.x,
@@ -45,17 +48,13 @@ export default class Meteoro{
             );
         }
 
-        //stilo do Meteoro
-       //c.fillStyle = 'white'
-       //c.fillRect(this.x, this.y, this.width, this.height);
-
         //texto do peso do meteoro
         c.fillStyle = 'white'
         c.font = '30px arial';
         c.textAlign = 'center';
         c.textBaseline = 'middle'
         c.fillText(
-            this.peso, //o quê vai ser desenhado 
+            this.peso + ' t', //o que vai ser desenhado 
             this.posicaoNaTela.x + this.largura / 2, //onde vai ser desenhado na largura
             this.posicaoNaTela.y + this.altura / 2 // onde vai ser desenhado na altura
         );
@@ -63,5 +62,7 @@ export default class Meteoro{
 
     levaDano(dano){
         this.peso -= dano;
+        this.largura -= 0.5;
+        this.altura -= 0.5;
     }
 }

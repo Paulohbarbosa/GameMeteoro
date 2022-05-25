@@ -24,6 +24,9 @@ export default class Player {
         //velocidade
         this.velocidade = 4;
 
+        //condição
+        this.intacto = true;
+
         //tiro
         this.controleProjeteis = controleProjeteis;
 
@@ -37,7 +40,7 @@ export default class Player {
         //imagens
         const image = new Image();
         image.src = './src/imgs/nave.png'
-        this.escala = 0.3
+        this.escala = 0.2
 
         image.onload = () => {
 
@@ -70,7 +73,7 @@ export default class Player {
 
         //nave
 
-        if (this.image) {
+        if (this.image && this.intacto) {
             c.drawImage(
                 this.image,
                 this.iRecorte.x,
@@ -96,7 +99,7 @@ export default class Player {
             const y = this.pTela.y;
             const velocidade = 5;
             const atraso = 10;
-            const dano = 2;
+            const dano = 1;
             this.controleProjeteis.tiro(x, y, velocidade, atraso, dano);
         }
     }

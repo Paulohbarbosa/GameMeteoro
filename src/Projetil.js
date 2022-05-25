@@ -19,7 +19,7 @@ export default class Projetil{
     }
 
     colisao(meteoro){
-        if(this.x < meteoro.posicaoNaTela.x + meteoro.largura &&
+        if(this.x <= meteoro.posicaoNaTela.x + meteoro.largura &&
             this.x + this.width > meteoro.posicaoNaTela.x &&
             this.y < meteoro.posicaoNaTela.y + meteoro.altura &&
             this.y + this.height > meteoro.posicaoNaTela.y){
