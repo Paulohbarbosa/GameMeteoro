@@ -1,4 +1,25 @@
 export default class Player {
+    // matriz com os dados dos recorte das imagens no sprite nave [ix,iy,tx,ty]
+    matrizesImgNave = [
+        //esquerdo
+        [3, 3, 198, 558],
+        [204, 3, 134, 558],
+        [343, 1, 103, 562],
+        [449, 3, 228, 558],
+        [681, 3, 351, 558],
+        [1037, 10, 371, 558],
+
+        //meio
+        [1405, 10, 379, 558],
+
+        //direito
+        [1781, 10, 371, 558],
+        [2156, 3, 352, 558],
+        [2512, 3, 226, 558],
+        [2742, 1, 103, 562],
+        [2850, 3, 134, 558],
+        [2988, 3, 197, 558],
+    ]
     constructor(canvas, controleProjeteis) {
         //velocidade
         this.velocidade = 4;
@@ -10,6 +31,9 @@ export default class Player {
         document.addEventListener('keydown', this.teclaPressionada);
         document.addEventListener('keyup', this.teclaSolta);
 
+        //linha e coluna;
+        this.linha = 6;
+
         //imagens
         const image = new Image();
         image.src = './src/imgs/nave.png'
@@ -20,13 +44,13 @@ export default class Player {
             this.image = image
 
             this.iRecorte = {
-                x: 1405,
-                y: 9
+                x: this.matrizesImgNave[this.linha][0],
+                y: this.matrizesImgNave[this.linha][1]
             }
-            
+
             this.tRecorte = {
-                x: 379,
-                y: 554
+                x: this.matrizesImgNave[this.linha][2],
+                y: this.matrizesImgNave[this.linha][3]
             }
 
             this.largura = this.tRecorte.x * this.escala;
@@ -42,9 +66,10 @@ export default class Player {
     draw(c) {
 
         //função mover
-        this.mover();
+        this.mover(c);
 
         //nave
+
         if (this.image) {
             c.drawImage(
                 this.image,
@@ -58,6 +83,7 @@ export default class Player {
                 this.altura
             );
         }
+        //this.animar(c);
 
         //tiro
         this.atrirar();
@@ -76,17 +102,21 @@ export default class Player {
     }
 
     //mover o objeto
-    mover() {
+    mover(c) {
         //if(this.downPressed){this.y += this.velocidade}
         //if(this.upPressed){this.y -= this.velocidade}
-        if (this.leftPressPressed) { this.pTela.x -= this.velocidade }
-        if (this.rightPressed) { this.pTela.x += this.velocidade }
+        if (this.leftPressed) {
+            this.pTela.x -= this.velocidade;
+        } 
+        if (this.rightPressed) {
+            this.pTela.x += this.velocidade;
+        }
     }
     //quando a tecla é pressionada
     teclaPressionada = (e) => {
         // if(e.code === 'ArrowUp'){this.upPressed = true}
         // if(e.code === 'ArrowDown'){this.downPressed = true}
-        if (e.code === 'ArrowLeft') { this.leftPressPressed = true }
+        if (e.code === 'ArrowLeft') { this.leftPressed = true }
         if (e.code === 'ArrowRight') { this.rightPressed = true }
         if (e.code === 'Space') { this.espacoPressionar = true }
     }
@@ -95,7 +125,7 @@ export default class Player {
     teclaSolta = (e) => {
         //if(e.code === 'ArrowUp'){this.upPressed = false}
         //if(e.code === 'ArrowDown'){this.downPressed = false}
-        if (e.code === 'ArrowLeft') { this.leftPressPressed = false }
+        if (e.code === 'ArrowLeft') { this.leftPressed = false }
         if (e.code === 'ArrowRight') { this.rightPressed = false }
         if (e.code === 'Space') { this.espacoPressionar = false }
     }
