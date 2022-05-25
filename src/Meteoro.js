@@ -1,16 +1,7 @@
-export default class Meteoro{
-    constructor(){
-        //posição na tela
-        //this.x = x;
-        //this.y = y;
-
-        //tamanho do objeto
-        //this.width = width;
-        //this.height = height;
-
+export default class Meteoro{   
+    constructor(pTelaX,pTelaY,peso){
         //peso do meteoro
-        //this.peso = (this.width + this.height) / 2;
-        this.peso = 300;
+        this.peso = peso;
 
         //imagens
        const image = new Image();
@@ -23,16 +14,16 @@ export default class Meteoro{
                 x:0,
                 y:0,
             }
-            this.tamanhoOriginal ={
+            this.tRecorte ={
                 x:580,
                 y:1087
             }
             this.posicaoNaTela ={
-                x: 10,
-                y: 10
+                x: pTelaX,
+                y: pTelaY
             }
-            this.largura = this.tamanhoOriginal.x * this.escala
-            this.altura = this.tamanhoOriginal.y * this.escala
+            this.largura = this.tRecorte.x * this.escala
+            this.altura = this.tRecorte.y * this.escala
         }
     }
 
@@ -41,7 +32,17 @@ export default class Meteoro{
         //imagem do meteoro
         if(this.image){
             //c.drawImage(this.image,0,0,580,1087,10,10,580*0.2,1087*0.2);
-            c.drawImage(this.image,this.recorte.x,this.recorte.y,this.tamanhoOriginal.x,this.tamanhoOriginal.y,this.posicaoNaTela.x,this.posicaoNaTela.y,this.largura,this.altura);
+            c.drawImage(
+                this.image,
+                this.recorte.x,
+                this.recorte.y,
+                this.tRecorte.x,
+                this.tRecorte.y,
+                this.posicaoNaTela.x,
+                this.posicaoNaTela.y,
+                this.largura,
+                this.altura
+            );
         }
 
         //stilo do Meteoro

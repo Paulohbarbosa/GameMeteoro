@@ -1,4 +1,4 @@
-export default class Bala{
+export default class Projetil{
     constructor(x,y,velocidade,dano){
         //posição
         this.x = x;

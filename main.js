@@ -1,6 +1,6 @@
 import Player from './src/Player.js';
 import Meteoro from './src/Meteoro.js';
-import ControleBala from './src/ControleBalas.js';
+import ControleProjeteis from './src/ControleProjeteis.js';
 
 //capiturar a area de redenização do jogo
 const canvas = document.querySelector('canvas');
@@ -12,22 +12,21 @@ canvas.height = innerHeight; //600
 
 // criar os objetos para acena
     //Contorle de Bala
-const contreleBala = new ControleBala();
+const controleProjetil = new ControleProjeteis();
 
     //player
-const player = new Player(canvas, contreleBala);
+const player = new Player(canvas, controleProjetil);
 
     //meteoro
 //const meteoro = new Meteoro(50, 50, 100,200);
-const meteoro = new Meteoro(canvas);
+//const meteoro = new Meteoro();
 
     //vários meteoros
-/*const meteoros = [
-    new Meteoro(50,50,100,120),
-    new Meteoro(50,250,90,40),
-    new Meteoro(250,50,190,200),
-]*/
-
+const meteoros = [
+    new Meteoro(50,50,100),
+    new Meteoro(150,250,90),
+    new Meteoro(250,50,190),
+]
 
 //gameLopp => coração do Jogo
 
@@ -41,22 +40,22 @@ function gameLopp() {
     player.draw(c);
     
     //bala
-    contreleBala.draw(c);
+    controleProjetil.draw(c);
 
     //desenhar o meteoro
-    meteoro.draw(c);
+    //meteoro.draw(c);
 
     //para vários meteoros
-    /*
+    
     meteoros.forEach((meteoro)=>{
         //colisão com meteoro
-        if (contreleBala.colisao(meteoro)){
+        if (controleProjetil.colisao(meteoro)){
             if(meteoro.peso <= 0){
                 const index = meteoros.indexOf(meteoro);
                 meteoros.splice(index, 1);
             }
         }else{meteoro.draw(c)}
-    });*/
+    });
 }
 
 // controlar os frames
