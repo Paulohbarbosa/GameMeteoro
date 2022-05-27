@@ -1,4 +1,19 @@
-export default class Meteoro{   
+export default class Meteoro{
+    //matriz das imagens
+
+    matrizImgMeteoro = [
+        [0,0,610,1087],
+        [841,0,366,1080],
+        [1383,0,331,1098],
+        [2017,23,367,648],
+        [2059,788,325,562],
+        [2596,0,265,498],
+        [2574,522,315,842],
+        [3148,146,478,452],
+        [0,1441,801,655],
+        [215,2358,526,522],
+        [2772,1786,410,1109]
+    ]
     constructor(pTelaX,pTelaY,peso, velocidade){
         //peso do meteoro
         this.peso = peso;
@@ -9,18 +24,21 @@ export default class Meteoro{
         //imagens
        const image = new Image();
        image.src = './src/imgs/cometa.png'
-
        this.escala = 0.2
 
+       this.linha = 10
+
         image.onload = () =>{
+
             this.image = image
+
             this.recorte ={
-                x:0,
-                y:0,
+                x: this.matrizImgMeteoro[this.linha][0],
+                y: this.matrizImgMeteoro[this.linha][1]
             }
             this.tRecorte ={
-                x:610,
-                y:1087
+                x: this.matrizImgMeteoro[this.linha][2],
+                y: this.matrizImgMeteoro[this.linha][3]
             }
             this.posicaoNaTela ={
                 x: pTelaX,
@@ -62,7 +80,7 @@ export default class Meteoro{
 
     levaDano(dano){
         this.peso -= dano;
-        this.largura -= 0.5;
-        this.altura -= 0.5;
+        this.largura -= 0.8;
+        this.altura -= 0.8;
     }
 }
