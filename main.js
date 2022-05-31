@@ -30,8 +30,8 @@ const meteoros = [
 ]
 
 //função explosão que usa a classe particulas
-function explosao({objeto, cor, trasparencia}) {
-    for (let i = 0; i < 40; i++) {
+function explosao({ objeto, cor, trasparencia }) {
+    for (let i = 0; i < 20; i++) {
         particulas.push(
             new Particulas({
                 posicao: {
@@ -50,7 +50,7 @@ function explosao({objeto, cor, trasparencia}) {
     }
 }
 
-function estrelas(){
+function estrelas() {
     for (let i = 0; i < 100; i++) {
         particulas.push(
             new Particulas({
@@ -90,7 +90,7 @@ function gameLopp() {
     particulas.forEach((particula, index) => {
         if (particula.posicao.y - particula.raio >= canvas.height) {
             particula.posicao.x = Math.random() * canvas.width,
-            particula.posicao.y = -particula.raio
+                particula.posicao.y = -particula.raio
         }
         if (particula.opacidade <= 0) {
             setTimeout(() => {
@@ -101,13 +101,8 @@ function gameLopp() {
         }
     })
 
-
-
-    //bala
+    //projetil
     controleProjetil.draw(c);
-
-    //desenhar o meteoro
-    //meteoro.draw(c);
 
     //para vários meteoros
     meteoros.forEach((meteoro) => {
@@ -116,17 +111,17 @@ function gameLopp() {
             if (meteoro.peso <= 0) {
                 const index = meteoros.indexOf(meteoro);
                 meteoros.splice(index, 1);
+                //explosão
                 explosao({
                     objeto: meteoro,
                     cor: 'yellow',
                     trasparencia: true
                 })
             }
-
-            //esplosão
-           
             
-        } else { meteoro.draw(c) }
+        } else { 
+            meteoro.draw(c);
+        }
 
         //colisão com play
         if (meteoro.posicaoNaTela.y + meteoro.altura >= player.posicaoNaTela.y &&
@@ -135,21 +130,18 @@ function gameLopp() {
             meteoro.posicaoNaTela.y <= player.posicaoNaTela.y + player.altura) {
             console.log("perdeu");
             player.intacto = false;
+            //explosão
             explosao({
                 objeto: player,
-                cor: 'yellow',
+                cor: 'white',
                 trasparencia: true
             })
-
             setTimeout(() => {
                 game.ativo = false;
             }, 2000)
         }
     });
-
-
 }
 
 // controlar os frames
-
 setInterval(gameLopp, 1000 / 60);

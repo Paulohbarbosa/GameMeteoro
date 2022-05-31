@@ -77,7 +77,7 @@ export default class Meteoro{
             this.posicaoNaTela.y + this.altura / 2 // onde vai ser desenhado na altura
         );
     }
-
+    
     levaDano(dano){
         this.peso -= dano;
         this.largura -= 0.8;

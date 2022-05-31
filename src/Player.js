@@ -24,6 +24,9 @@ export default class Player {
         //velocidade
         this.velocidade = 4;
 
+        //canvas
+        this.canvas = canvas;
+
         //condição
         this.intacto = true;
 
@@ -60,8 +63,8 @@ export default class Player {
             this.altura = this.tRecorte.y * this.escala;
 
             this.posicaoNaTela = {
-                x: canvas.width / 2 - this.largura / 2,
-                y: canvas.height - this.altura - 50
+                x: this.canvas.width / 2 - this.largura / 2,
+                y: this.canvas.height - this.altura - 50
             }
         }
     }
@@ -69,7 +72,7 @@ export default class Player {
     draw(c) {
 
         //função mover
-        this.mover(c);
+        this.mover();
 
         //nave
 
@@ -105,13 +108,12 @@ export default class Player {
     }
 
     //mover o objeto
-    mover(c) {
+    mover() {
         //if(this.downPressed){this.y += this.velocidade}
         //if(this.upPressed){this.y -= this.velocidade}
-        if (this.leftPressed) {
+        if (this.leftPressed && this.posicaoNaTela.x >= 0) {
             this.posicaoNaTela.x -= this.velocidade;
-        } 
-        if (this.rightPressed) {
+        } else if (this.rightPressed && this.posicaoNaTela.x + this.largura <= this.canvas.width) {
             this.posicaoNaTela.x += this.velocidade;
         }
     }
