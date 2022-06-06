@@ -1,18 +1,19 @@
 import Player from './src/Player.js';
-import Meteoro from './src/Meteoro.js';
+import ControleMeteoros from './src/ControleMeteoros.js';
 import ControleProjeteis from './src/ControleProjeteis.js';
 import Particulas from './src/Particulas.js';
+
 
 //capiturar a area de redenização do jogo
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
 //definir o tamanho da tela
-canvas.width = innerWidth; //550
-canvas.height = innerHeight; //600
+canvas.width = 700; //innerWidth
+canvas.height = 600; //innerHeight
 
 // criar os objetos para acena
-//Contorle de Bala
+//Contorle de projeteis
 const controleProjetil = new ControleProjeteis();
 
 //player
@@ -21,34 +22,8 @@ const player = new Player(canvas, controleProjetil);
 //Particulas
 const particulas = [];
 
-//vários meteoros
-const meteoros = [
-    new Meteoro(50, 0, 100, 0.5),
-    new Meteoro(250, 0, 50, 0.8),
-    new Meteoro(550, -200, 50, 0.8),
-    new Meteoro(450, 0, 190, 0.2),
-]
-
-//função explosão que usa a classe particulas
-function explosao({ objeto, cor, trasparencia }) {
-    for (let i = 0; i < 20; i++) {
-        particulas.push(
-            new Particulas({
-                posicao: {
-                    x: objeto.posicaoNaTela.x + objeto.largura / 2,
-                    y: objeto.posicaoNaTela.y + objeto.largura / 2
-                },
-                velocidade: {
-                    x: (Math.random() - 0.5) * 2,
-                    y: (Math.random() - 0.5) * 2,
-                },
-                raio: Math.random() * 3,
-                cor: cor,
-                trasparencia
-            })
-        )
-    }
-}
+//Meteoros
+const controleMeteoro = [];
 
 function estrelas() {
     for (let i = 0; i < 100; i++) {
@@ -76,12 +51,51 @@ let game = {
     ativo: true
 }
 
+function colisaoPlayer(meteoro) {
+    if (meteoro.pTelaY + meteoro.altura >= player.pTelaY &&
+        meteoro.pTelaX + meteoro.largura >= player.pTelax &&
+        meteoro.pTelaY <= player.pTelaY + player.altura &&
+        meteoro.pTelaX <= player.pTelax + player.largura) {
+        console.log("perdeu");
+
+        player.intacto = false;
+
+        setTimeout(() => {
+            game.ativo = false;
+        }, 2000)
+    }
+
+}
+
+function colisaoMeteoro(controle, meteoro) {
+
+    //colisão com meteoro ou se ele sair da tela
+    if (controleProjetil.colisao(meteoro) || meteoro.pTelaY > canvas.height) {
+        if (meteoro.peso <= 0) {
+            const index = controle.listaMeteoros.indexOf(meteoro);
+            controle.listaMeteoros.splice(index, 1);
+        }
+
+    } else {
+        meteoro.draw(c);
+    }
+}
+
+let frames = 0;
+let intervaloAleatorio = Math.floor(Math.random() * 500);
+console.log(intervaloAleatorio);
+
 //gameLopp => coração do Jogo
 function gameLopp() {
+
     if (!game.ativo) return
+
     //estilo do plano de fundo do game
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height);
+
+    //projetil
+    controleProjetil.draw(c);
 
     //desenhar o player
     player.draw(c);
@@ -101,46 +115,20 @@ function gameLopp() {
         }
     })
 
-    //projetil
-    controleProjetil.draw(c);
+    controleMeteoro.forEach((controle) => {
+        controle.update()
+        controle.listaMeteoros.forEach((meteoro) => {
+            colisaoMeteoro(controle,meteoro);
+            colisaoPlayer(meteoro);
+        })
+    })
 
-    //para vários meteoros
-    meteoros.forEach((meteoro) => {
-        //colisão com meteoro
-        if (controleProjetil.colisao(meteoro)) {
-            if (meteoro.peso <= 0) {
-                const index = meteoros.indexOf(meteoro);
-                meteoros.splice(index, 1);
-                //explosão
-                explosao({
-                    objeto: meteoro,
-                    cor: 'yellow',
-                    trasparencia: true
-                })
-            }
-            
-        } else { 
-            meteoro.draw(c);
-        }
 
-        //colisão com play
-        if (meteoro.posicaoNaTela.y + meteoro.altura >= player.posicaoNaTela.y &&
-            meteoro.posicaoNaTela.x + meteoro.largura >= player.posicaoNaTela.x &&
-            meteoro.posicaoNaTela.x <= player.posicaoNaTela.x + player.largura &&
-            meteoro.posicaoNaTela.y <= player.posicaoNaTela.y + player.altura) {
-            console.log("perdeu");
-            player.intacto = false;
-            //explosão
-            explosao({
-                objeto: player,
-                cor: 'white',
-                trasparencia: true
-            })
-            setTimeout(() => {
-                game.ativo = false;
-            }, 2000)
-        }
-    });
+    if (frames % intervaloAleatorio === 0) {
+        controleMeteoro.push(new ControleMeteoros());
+    }
+
+    frames++
 }
 
 // controlar os frames

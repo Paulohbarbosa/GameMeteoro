@@ -62,10 +62,8 @@ export default class Player {
             this.largura = this.tRecorte.x * this.escala;
             this.altura = this.tRecorte.y * this.escala;
 
-            this.posicaoNaTela = {
-                x: this.canvas.width / 2 - this.largura / 2,
-                y: this.canvas.height - this.altura - 50
-            }
+            this.pTelax = this.canvas.width / 2 - this.largura / 2,
+            this.pTelaY = this.canvas.height - this.altura - 50
         }
     }
 
@@ -83,8 +81,8 @@ export default class Player {
                 this.iRecorte.y,
                 this.tRecorte.x,
                 this.tRecorte.y,
-                this.posicaoNaTela.x,
-                this.posicaoNaTela.y,
+                this.pTelax,
+                this.pTelaY,
                 this.largura,
                 this.altura
             );
@@ -98,11 +96,11 @@ export default class Player {
     // atirar
     atrirar() {
         if (this.espacoPressionar) {
-            const x = this.posicaoNaTela.x + this.largura / 2;
-            const y = this.posicaoNaTela.y;
+            const x = this.pTelax + this.largura / 2;
+            const y = this.pTelaY;
             const velocidade = 5;
             const atraso = 10;
-            const dano = 1;
+            const dano = 10;
             this.controleProjeteis.tiro(x, y, velocidade, atraso, dano);
         }
     }
@@ -111,10 +109,10 @@ export default class Player {
     mover() {
         //if(this.downPressed){this.y += this.velocidade}
         //if(this.upPressed){this.y -= this.velocidade}
-        if (this.leftPressed && this.posicaoNaTela.x >= 0) {
-            this.posicaoNaTela.x -= this.velocidade;
-        } else if (this.rightPressed && this.posicaoNaTela.x + this.largura <= this.canvas.width) {
-            this.posicaoNaTela.x += this.velocidade;
+        if (this.leftPressed && this.pTelax >= 0) {
+            this.pTelax -= this.velocidade;
+        } else if (this.rightPressed && this.pTelax + this.largura <= this.canvas.width) {
+            this.pTelax += this.velocidade;
         }
     }
     //quando a tecla é pressionada

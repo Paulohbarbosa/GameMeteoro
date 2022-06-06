@@ -1,14 +1,33 @@
-body{
+canvas{
     margin: 0;
-    justify-content: center;
+    padding: 0;
+    box-shadow: black 20px 10px 50px;
+    border-radius: 20px;
+}
+body{
+    display: flex;
     align-items: center;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
     background-color: grey;
 }
-
 p{
-    z-index: 10;
+    position: fixed;
+    margin: 10px;
+    z-index: 10; 
     color: yellow;
     margin: 10 px;
-    font-family: sans-serif;
+    font-family: Helvetica;
     font-size: 16px;
+    align-content: column;
+}
+
+h1{
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 2.9em;
+    font-family: Helvetica;
+    color: white;
 }
