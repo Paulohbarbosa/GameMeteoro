@@ -43,7 +43,7 @@ export default class Player {
         //imagens
         const image = new Image();
         image.src = './src/imgs/nave.png'
-        this.escala = 0.2
+        this.escala = 0.15
 
         image.onload = () => {
 
@@ -65,6 +65,8 @@ export default class Player {
             this.pTelax = this.canvas.width / 2 - this.largura / 2,
             this.pTelaY = this.canvas.height - this.altura - 50
         }
+        this.somExplosao = new Audio('./src/sounds/explosaoNave.mp3');
+        this.somExplosao.volume = 0.1;
     }
 
     draw(c) {
@@ -98,7 +100,7 @@ export default class Player {
         if (this.espacoPressionar) {
             const x = this.pTelax + this.largura / 2;
             const y = this.pTelaY;
-            const velocidade = 5;
+            const velocidade = 10;
             const atraso = 10;
             const dano = 10;
             this.controleProjeteis.tiro(x, y, velocidade, atraso, dano);
@@ -107,8 +109,12 @@ export default class Player {
 
     //mover o objeto
     mover() {
-        //if(this.downPressed){this.y += this.velocidade}
-        //if(this.upPressed){this.y -= this.velocidade}
+        if(this.downPressed  && this.pTelaY + this.altura <=  600){
+            this.pTelaY += this.velocidade
+        }
+        if(this.upPressed  && this.pTelaY >= 400){
+            this.pTelaY -= this.velocidade
+        }
         if (this.leftPressed && this.pTelax >= 0) {
             this.pTelax -= this.velocidade;
         } else if (this.rightPressed && this.pTelax + this.largura <= this.canvas.width) {
@@ -117,8 +123,8 @@ export default class Player {
     }
     //quando a tecla é pressionada
     teclaPressionada = (e) => {
-        // if(e.code === 'ArrowUp'){this.upPressed = true}
-        // if(e.code === 'ArrowDown'){this.downPressed = true}
+        if(e.code === 'ArrowUp'){this.upPressed = true}
+        if(e.code === 'ArrowDown'){this.downPressed = true}
         if (e.code === 'ArrowLeft') { this.leftPressed = true }
         if (e.code === 'ArrowRight') { this.rightPressed = true }
         if (e.code === 'Space') { this.espacoPressionar = true }
@@ -126,8 +132,8 @@ export default class Player {
 
     //Quando a tecla é solta 
     teclaSolta = (e) => {
-        //if(e.code === 'ArrowUp'){this.upPressed = false}
-        //if(e.code === 'ArrowDown'){this.downPressed = false}
+        if(e.code === 'ArrowUp'){this.upPressed = false}
+        if(e.code === 'ArrowDown'){this.downPressed = false}
         if (e.code === 'ArrowLeft') { this.leftPressed = false }
         if (e.code === 'ArrowRight') { this.rightPressed = false }
         if (e.code === 'Space') { this.espacoPressionar = false }

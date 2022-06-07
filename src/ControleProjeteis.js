@@ -7,21 +7,30 @@ let score = 0;
 export default class ControleProjeteis {
     projeteis = [];
     atrasoNoTiro = 0;
-    
-    tiro(x, y,velocidade,atraso,dano) {
+    constructor() {
+        this.somTiro = new Audio('./src/sounds/tiro.wav');
+        this.somTiro.volume = 0.05;
 
-        if (this.atrasoNoTiro <= 0){
-         this.projeteis.push(new Projetil(x, y,velocidade,dano));
-         this.atrasoNoTiro = atraso;
+    }
+
+
+    tiro(x, y, velocidade, atraso, dano) {
+
+        if (this.atrasoNoTiro <= 0) {
+            this.projeteis.push(new Projetil(x, y, velocidade, dano));
+            this.atrasoNoTiro = atraso;
+            
+            this.somTiro.currentTime = 0;
+            this.somTiro.play();
         }
-        this.atrasoNoTiro --;
+        this.atrasoNoTiro--;
     }
 
     draw(c) {
         this.projeteis.forEach((projetil) => {
 
             //limpar os tiros da memoria
-            if(this.seProjeteisSairamDaTela(projetil)){
+            if (this.seProjeteisSairamDaTela(projetil)) {
                 const index = this.projeteis.indexOf(projetil);
                 this.projeteis.splice(index, 1);
             }
@@ -30,15 +39,15 @@ export default class ControleProjeteis {
         })
     }
 
-    colisao(meteoro){
-        return this.projeteis.some((projetil) =>{
-            if(projetil.colisao(meteoro)){
+    colisao(meteoro) {
+        return this.projeteis.some((projetil) => {
+            if (projetil.colisao(meteoro)) {
                 this.projeteis.splice(
                     this.projeteis.indexOf(projetil), 1
                 );
-                 //score implementação
-                 score += 10;
-                 scoreEl.innerHTML = score;
+                //score implementação
+                score += 10;
+                scoreEl.innerHTML = score;
 
                 return true;
             }
