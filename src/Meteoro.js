@@ -1,68 +1,60 @@
 export default class Meteoro {
-    //matriz das imagens
-
-    matrizImgMeteoro = [
-        [0, 0, 610, 1087],
-        [3148, 146, 478, 452],
-        [0, 1441, 801, 655],
-        [215, 2358, 526, 522],
-        [2772, 1786, 410, 1109],
-
-        [841, 0, 366, 1080],
-        [1383, 0, 331, 1098],
-        [2017, 23, 367, 648],
-        [2059, 788, 325, 562],
-        [2596, 0, 265, 498],
-        [2574, 522, 315, 842]
-    ];
-
     constructor(pTelaX, poTelaY, escala, linha, velocidade,peso) {
-
         this.pTelaX = pTelaX;
         this.poTelaY = poTelaY;
         this.peso = peso;
         this.velocidade = velocidade;
-        this.linha = linha;
+        this.posicao = linha;
         this.escala = escala;
         this.desacelerar = 0
 
+        this.meteoro = [0, 450, 901, 1350];
+
         //imagens
         const image = new Image();
-        image.src = './src/imgs/cometa.png'
+        image.src = './src/imgs/cometa2.png'
 
         image.onload = () => {
 
             this.image = image
 
-            this.recorte = {
-                x: this.matrizImgMeteoro[this.linha][0],
-                y: this.matrizImgMeteoro[this.linha][1]
-            }
-            this.tRecorte = {
-                x: this.matrizImgMeteoro[this.linha][2],
-                y: this.matrizImgMeteoro[this.linha][3]
-            }
+            this.recorteX= this.meteoro[this.posicao];
+            this.recorteY= 0;
+            this.tRecorteX = 450;
+            this.tRecorteY = 1200;
 
-            this.largura = (this.tRecorte.x * this.escala) + this.peso / 2
-            this.altura = (this.tRecorte.y * this.escala) + this.peso / 2
+            this.largura = (this.tRecorteX * this.escala) 
+            this.altura = (this.tRecorteY * this.escala) 
 
             this.pTelaY = this.poTelaY - this.altura
+
+            //area do desenho para a colisão
+            this.recuo = 15;
+            this.aCPosX = this.pTelaX + (this.recuo / 2);
+            this.aCPosY = (this.pTelaY - (this.pTelaY + this.altura / 3)) + (this.recuo / 2);
+            this.aCLargura = this.largura - this.recuo;
+            this.aCAltura = (this.altura / 3) - this.recuo;
+
+            
         }
 
         this.somExplosao = new Audio('./src/sounds/explosao.mp3');
         this.somExplosao.volume = 0.1;
+
+        this.raio = (400 / 2) * this.escala;
     }
 
     draw(c) {
-
+        
+        c.beginPath();
         //imagem do meteoro
         if (this.image) {
             c.drawImage(
                 this.image,
-                this.recorte.x,
-                this.recorte.y,
-                this.tRecorte.x,
-                this.tRecorte.y,
+                this.recorteX,
+                this.recorteY,
+                this.tRecorteX,
+                this.tRecorteY,
                 this.pTelaX,
                 this.pTelaY,
                 this.largura,
@@ -70,15 +62,17 @@ export default class Meteoro {
             );
         }
 
-        //texto do peso do meteoro
-        c.fillStyle = 'white'
-        c.font = '30px arial';
-        c.textAlign = 'center';
-        c.textBaseline = 'middle';
-        c.fillText(this.peso, this.pTelaX + this.largura / 2, this.pTelaY + this.altura / 2);
+        this.info(c);
+
+        //area de colisão
+        //this.quadrado(c,'red',this.aCPosX, this.aCPosY, this.aCLargura, this.aCAltura);
+        //area do desenho
+       //this.quadrado(c,'white',this.pTelaX, this.pTelaY, this.largura, this.altura);
+       
 
         //movimento do cometa
         this.pTelaY += this.velocidade;
+        this.aCPosY += this.velocidade;
     }
 
     levaDano(dano) {
@@ -87,5 +81,23 @@ export default class Meteoro {
         if(this.desacelerar <= 5){
             this.velocidade -= 0.005;
         }
+    }
+
+    quadrado(c, cor, x, y, largura, altura ) {
+
+        c.strokeStyle = cor
+        c.stroke();
+        c.strokeRect(x, y, largura, altura)
+    }
+
+    info(c) {
+
+        //texto do peso do meteoro
+        c.fillStyle = 'white'
+        c.font = '22px arial';
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.fillText(this.peso, this.aCPosX + this.aCLargura/2, this.aCPosY + this.aCAltura /2);
+
     }
 }

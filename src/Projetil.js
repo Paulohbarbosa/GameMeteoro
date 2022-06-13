@@ -19,6 +19,18 @@ export default class Projetil{
     }
 
     colisao(meteoro){
+        if(this.x <= meteoro.aCPosX + meteoro.aCLargura &&
+            this.x + this.width > meteoro.aCPosX &&
+            this.y < meteoro.aCPosY + meteoro.aCAltura &&
+            this.y + this.height > meteoro.aCPosY){
+                meteoro.levaDano(this.dano);
+                return true;
+            }
+            return false;
+    }
+
+    /*
+    colisao(meteoro){
         if(this.x <= meteoro.pTelaX + meteoro.largura &&
             this.x + this.width > meteoro.pTelaX &&
             this.y < meteoro.pTelaY + meteoro.altura &&
@@ -28,4 +40,5 @@ export default class Projetil{
             }
             return false;
     }
+    */
 }

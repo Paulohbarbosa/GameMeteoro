@@ -10,24 +10,40 @@
 </head>
 
 <body>
-    <div id="linha">
-        <h1>Meteoros</h1>
-    </div>
-    <div id="linha">
-        <div>
-            <p>
-                <span>
-                    Score:
+    <table>
+        <tr>
+            <td width="20%">
+                <p>
+                    <span>
+                        Score:
+                    </span>
+                    <span id="score">
+                        0
+                    </span>
+                </p>
+            </td>
+            <td>
+                <span id="titulo">
+                    <h1>Meteoro</h1>
                 </span>
-                <span id="score">
-                    0
-                </span>
-            </p>
-        </div>
-        <div>
-            <canvas></canvas>
-        </div>
-    </div>
+            </td>
+            <td width="30%">
+                <p>
+                    <span>
+                        População:
+                    </span>
+                    <span id="população">
+                        + 8.000.000.000
+                    </span>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <canvas></canvas>
+            </td>
+        </tr>
+    </table>
 
     <script src="main.js" type="module"></script>
 </body>

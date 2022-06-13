@@ -49,24 +49,18 @@ export default class Player {
 
             this.image = image
 
-            this.iRecorte = {
-                x: this.matrizesImgNave[this.linha][0],
-                y: this.matrizesImgNave[this.linha][1]
-            }
+            this.largura = 0;
+            this.altura = 0;
 
-            this.tRecorte = {
-                x: this.matrizesImgNave[this.linha][2],
-                y: this.matrizesImgNave[this.linha][3]
-            }
-
-            this.largura = this.tRecorte.x * this.escala;
-            this.altura = this.tRecorte.y * this.escala;
-
-            this.pTelax = this.canvas.width / 2 - this.largura / 2,
-            this.pTelaY = this.canvas.height - this.altura - 50
+            this.pTelax = this.canvas.width / 2,
+            this.pTelaY = this.canvas.height - 200
         }
         this.somExplosao = new Audio('./src/sounds/explosaoNave.mp3');
         this.somExplosao.volume = 0.1;
+
+        this.gameframe = 0;
+        this.ir = true;
+        this.intervalo = 5;
     }
 
     draw(c) {
@@ -76,23 +70,65 @@ export default class Player {
 
         //nave
 
-        if (this.image && this.intacto) {
+        if (this.image) {
+            if(this.linha < 0){
+                this.linha = 0;
+            }
+            if(this.linha > 12){
+                this.linha = 12;
+            }
             c.drawImage(
                 this.image,
-                this.iRecorte.x,
-                this.iRecorte.y,
-                this.tRecorte.x,
-                this.tRecorte.y,
-                this.pTelax,
-                this.pTelaY,
-                this.largura,
-                this.altura
+                this.matrizesImgNave[this.linha][0],
+                this.matrizesImgNave[this.linha][1],
+                this.matrizesImgNave[this.linha][2],
+                this.matrizesImgNave[this.linha][3],
+                this.pTelax, 
+                this.pTelaY, 
+                this.largura = this.matrizesImgNave[this.linha][2]*this.escala, 
+                this.altura = this.matrizesImgNave[this.linha][3]*this.escala
             );
         }
-        //this.animar(c);
 
+       if(this.gameframe % this.intervalo == 0 ){
+            //direita
+            if(this.linha <= 12 && this.rightPressed){
+                this.linha++;
+                this.velocidade += 0.5;
+                if(this.linha == 12){
+                    this.ir = false;
+                }
+            } else if(this.linha > 6 && this.ir == false){
+                this.linha--;
+                if(this.linha == 6){
+                    this.ir = true;
+                }
+            }else if(this.linha <= 6 && this.leftPressed){
+                this.linha--;
+                this.velocidade += 0.5;
+                if(this.linha == 0){
+                    this.ir = false;
+                }
+            }else if(this.linha >=0 && this.ir == false){
+                this.linha++;
+                if(this.linha == 6){
+                    this.ir = false;
+                }
+            }
+
+            else{
+                this.linha = 6;
+                this.velocidade = 4;
+            } 
+        }
+
+        this.gameframe++;
+    
+       
         //tiro
         this.atrirar();
+
+       // this.quadrado(c);
     }
 
     // atirar
@@ -107,14 +143,16 @@ export default class Player {
         }
     }
 
+    quadrado(c) {
+        c.strokeStyle = 'white'
+        c.stroke();
+        c.strokeRect(this.pTelax, this.pTelaY, this.largura, this.altura)
+
+        //console.log('Area de colisão x: '+ this.aCPosY)
+    }
+
     //mover o objeto
     mover() {
-        if(this.downPressed  && this.pTelaY + this.altura <=  600){
-            this.pTelaY += this.velocidade
-        }
-        if(this.upPressed  && this.pTelaY >= 400){
-            this.pTelaY -= this.velocidade
-        }
         if (this.leftPressed && this.pTelax >= 0) {
             this.pTelax -= this.velocidade;
         } else if (this.rightPressed && this.pTelax + this.largura <= this.canvas.width) {
@@ -123,17 +161,14 @@ export default class Player {
     }
     //quando a tecla é pressionada
     teclaPressionada = (e) => {
-        if(e.code === 'ArrowUp'){this.upPressed = true}
-        if(e.code === 'ArrowDown'){this.downPressed = true}
         if (e.code === 'ArrowLeft') { this.leftPressed = true }
         if (e.code === 'ArrowRight') { this.rightPressed = true }
         if (e.code === 'Space') { this.espacoPressionar = true }
     }
+     
 
     //Quando a tecla é solta 
     teclaSolta = (e) => {
-        if(e.code === 'ArrowUp'){this.upPressed = false}
-        if(e.code === 'ArrowDown'){this.downPressed = false}
         if (e.code === 'ArrowLeft') { this.leftPressed = false }
         if (e.code === 'ArrowRight') { this.rightPressed = false }
         if (e.code === 'Space') { this.espacoPressionar = false }
