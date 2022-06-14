@@ -29,7 +29,7 @@ export default class Meteoro {
             this.pTelaY = this.poTelaY - this.altura
 
             //area do desenho para a colisão
-            this.recuo = 15;
+            this.recuo = 5;
             this.aCPosX = this.pTelaX + (this.recuo / 2);
             this.aCPosY = (this.pTelaY - (this.pTelaY + this.altura / 3)) + (this.recuo / 2);
             this.aCLargura = this.largura - this.recuo;
@@ -61,9 +61,9 @@ export default class Meteoro {
         this.info(c);
 
         //area de colisão
-        //this.quadrado(c,'red',this.aCPosX, this.aCPosY, this.aCLargura, this.aCAltura);
+        //this.caixa(c,'red',this.aCPosX, this.aCPosY, this.aCLargura, this.aCAltura);
         //area do desenho
-       //this.quadrado(c,'white',this.pTelaX, this.pTelaY, this.largura, this.altura);
+       //this.caixa(c,'white',this.pTelaX, this.pTelaY, this.largura, this.altura);
        
         //movimento do cometa
         this.pTelaY += this.velocidade;
@@ -75,10 +75,11 @@ export default class Meteoro {
 
         if(this.desacelerar <= 5){
             this.velocidade -= 0.005;
+            this.desacelerar++
         }
     }
 
-    quadrado(c, cor, x, y, largura, altura ) {
+    caixa(c, cor, x, y, largura, altura ) {
 
         c.strokeStyle = cor
         c.stroke();

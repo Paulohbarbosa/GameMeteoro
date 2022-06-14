@@ -1,15 +1,12 @@
 import Projetil from './Projetil.js';
 
-//fazer o score
-const scoreEl = document.querySelector('#score');
-let score = 0;
-
 export default class ControleProjeteis {
     projeteis = [];
     atrasoNoTiro = 0;
-    constructor() {
+    constructor(scoreEl) {
         this.somTiro = new Audio('./src/sounds/tiro.wav');
         this.somTiro.volume = 0.05;
+        this.scoreEl =scoreEl;
     }
 
     tiro(x, y, velocidade, atraso, dano) {
@@ -42,10 +39,6 @@ export default class ControleProjeteis {
                 this.projeteis.splice(
                     this.projeteis.indexOf(projetil), 1
                 );
-                //score implementação
-                score += 10;
-                scoreEl.innerHTML = score;
-
                 return true;
             }
             return false;

@@ -33,6 +33,9 @@ export default class Player {
         //tiro
         this.controleProjeteis = controleProjeteis;
 
+        //peso
+        this.energia = 200;
+
         //entradas do tecaldo
         document.addEventListener('keydown', this.teclaPressionada);
         document.addEventListener('keyup', this.teclaSolta);
@@ -40,10 +43,13 @@ export default class Player {
         //linha e coluna;
         this.linha = 6;
 
+        //força do disparo
+        this.dano = 10;
+
         //imagens
         const image = new Image();
         image.src = './src/imgs/nave.png'
-        this.escala = 0.15
+        this.escala = 0.09
 
         image.onload = () => {
 
@@ -53,10 +59,10 @@ export default class Player {
             this.altura = 0;
 
             this.pTelaX = this.canvas.width / 2,
-                this.pTelaY = this.canvas.height - 200
+            this.pTelaY = this.canvas.height - 200
         }
         this.somExplosao = new Audio('./src/sounds/explosaoNave.mp3');
-        this.somExplosao.volume = 0.1;
+        this.somExplosao.volume = 0.5;
 
         this.gameframe = 0;
         this.ir = true;
@@ -126,7 +132,9 @@ export default class Player {
             //tiro
             this.atrirar();
 
-            //this.quadrado(c);
+            this.info(c);
+
+            //this.caixa(c);
         }
     }
 
@@ -137,22 +145,30 @@ export default class Player {
             const y = this.pTelaY;
             const velocidade = 10;
             const atraso = 10;
-            const dano = 10;
-            this.controleProjeteis.tiro(x, y, velocidade, atraso, dano);
+            this.controleProjeteis.tiro(x, y, velocidade, atraso, this.dano);
         }
     }
 
-    quadrado(c) {
+    caixa(c) {
         c.strokeStyle = 'white'
         c.stroke();
         c.strokeRect(this.pTelaX, this.pTelaY, this.largura, this.altura)
     }
 
+    info(c) {
+        //texto do peso do player
+        c.fillStyle = 'white'
+        c.font = '16px arial';
+        c.textAlign = 'center';
+        c.textBaseline = 'bootom';
+        c.fillText(this.energia, this.pTelaX + this.largura/2, this.pTelaY + this.altura + 10);
+    }
+
     //mover o objeto
     mover() {
-        if (this.leftPressed && this.pTelaX >= 0) {
+        if (this.leftPressed && this.pTelaX >= 20) {
             this.pTelaX -= this.velocidade;
-        } else if (this.rightPressed && this.pTelaX + this.largura <= this.canvas.width) {
+        } else if (this.rightPressed && this.pTelaX + this.largura <= (this.canvas.width -30)) {
             this.pTelaX += this.velocidade;
         }
     }
