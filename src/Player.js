@@ -52,8 +52,8 @@ export default class Player {
             this.largura = 0;
             this.altura = 0;
 
-            this.pTelax = this.canvas.width / 2,
-            this.pTelaY = this.canvas.height - 200
+            this.pTelaX = this.canvas.width / 2,
+                this.pTelaY = this.canvas.height - 200
         }
         this.somExplosao = new Audio('./src/sounds/explosaoNave.mp3');
         this.somExplosao.volume = 0.1;
@@ -65,76 +65,75 @@ export default class Player {
 
     draw(c) {
 
-        //função mover
-        this.mover();
+        if (this.intacto) {
 
-        //nave
+            //função mover
+            this.mover();
 
-        if (this.image) {
-            if(this.linha < 0){
-                this.linha = 0;
+            //nave
+            if (this.image) {
+                if (this.linha < 0) {
+                    this.linha = 0;
+                }
+                if (this.linha > 12) {
+                    this.linha = 12;
+                }
+                c.drawImage(
+                    this.image,
+                    this.matrizesImgNave[this.linha][0],
+                    this.matrizesImgNave[this.linha][1],
+                    this.matrizesImgNave[this.linha][2],
+                    this.matrizesImgNave[this.linha][3],
+                    this.pTelaX,
+                    this.pTelaY,
+                    this.largura = this.matrizesImgNave[this.linha][2] * this.escala,
+                    this.altura = this.matrizesImgNave[this.linha][3] * this.escala
+                );
             }
-            if(this.linha > 12){
-                this.linha = 12;
+
+            if (this.gameframe % this.intervalo == 0) {
+                //direita
+                if (this.linha <= 12 && this.rightPressed) {
+                    this.linha++;
+                    this.velocidade += 0.5;
+                    if (this.linha == 12) {
+                        this.ir = false;
+                    }
+                } else if (this.linha > 6 && this.ir == false) {
+                    this.linha--;
+                    if (this.linha == 6) {
+                        this.ir = true;
+                    }
+                } else if (this.linha <= 6 && this.leftPressed) {
+                    this.linha--;
+                    this.velocidade += 0.5;
+                    if (this.linha == 0) {
+                        this.ir = false;
+                    }
+                } else if (this.linha >= 0 && this.ir == false) {
+                    this.linha++;
+                    if (this.linha == 6) {
+                        this.ir = false;
+                    }
+                } else {
+                    this.linha = 6;
+                    this.velocidade = 4;
+                }
             }
-            c.drawImage(
-                this.image,
-                this.matrizesImgNave[this.linha][0],
-                this.matrizesImgNave[this.linha][1],
-                this.matrizesImgNave[this.linha][2],
-                this.matrizesImgNave[this.linha][3],
-                this.pTelax, 
-                this.pTelaY, 
-                this.largura = this.matrizesImgNave[this.linha][2]*this.escala, 
-                this.altura = this.matrizesImgNave[this.linha][3]*this.escala
-            );
+
+            this.gameframe++;
+
+            //tiro
+            this.atrirar();
+
+            //this.quadrado(c);
         }
-
-       if(this.gameframe % this.intervalo == 0 ){
-            //direita
-            if(this.linha <= 12 && this.rightPressed){
-                this.linha++;
-                this.velocidade += 0.5;
-                if(this.linha == 12){
-                    this.ir = false;
-                }
-            } else if(this.linha > 6 && this.ir == false){
-                this.linha--;
-                if(this.linha == 6){
-                    this.ir = true;
-                }
-            }else if(this.linha <= 6 && this.leftPressed){
-                this.linha--;
-                this.velocidade += 0.5;
-                if(this.linha == 0){
-                    this.ir = false;
-                }
-            }else if(this.linha >=0 && this.ir == false){
-                this.linha++;
-                if(this.linha == 6){
-                    this.ir = false;
-                }
-            }
-
-            else{
-                this.linha = 6;
-                this.velocidade = 4;
-            } 
-        }
-
-        this.gameframe++;
-    
-       
-        //tiro
-        this.atrirar();
-
-       // this.quadrado(c);
     }
 
     // atirar
     atrirar() {
         if (this.espacoPressionar) {
-            const x = this.pTelax + this.largura / 2;
+            const x = this.pTelaX + this.largura / 2;
             const y = this.pTelaY;
             const velocidade = 10;
             const atraso = 10;
@@ -146,17 +145,15 @@ export default class Player {
     quadrado(c) {
         c.strokeStyle = 'white'
         c.stroke();
-        c.strokeRect(this.pTelax, this.pTelaY, this.largura, this.altura)
-
-        //console.log('Area de colisão x: '+ this.aCPosY)
+        c.strokeRect(this.pTelaX, this.pTelaY, this.largura, this.altura)
     }
 
     //mover o objeto
     mover() {
-        if (this.leftPressed && this.pTelax >= 0) {
-            this.pTelax -= this.velocidade;
-        } else if (this.rightPressed && this.pTelax + this.largura <= this.canvas.width) {
-            this.pTelax += this.velocidade;
+        if (this.leftPressed && this.pTelaX >= 0) {
+            this.pTelaX -= this.velocidade;
+        } else if (this.rightPressed && this.pTelaX + this.largura <= this.canvas.width) {
+            this.pTelaX += this.velocidade;
         }
     }
     //quando a tecla é pressionada
@@ -165,7 +162,6 @@ export default class Player {
         if (e.code === 'ArrowRight') { this.rightPressed = true }
         if (e.code === 'Space') { this.espacoPressionar = true }
     }
-     
 
     //Quando a tecla é solta 
     teclaSolta = (e) => {

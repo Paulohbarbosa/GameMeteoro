@@ -3,10 +3,7 @@ import Meteoro from './Meteoro.js'
 export default class ControleMeteoros {
     constructor() {
         this.y = 0;
-        this.velocidade = {
-            x: 0,
-            y: 0
-        }
+        this.velocidade = 0;
         this.peso = 0;
         this.espaco = 0;
         this.escala = 0;
@@ -16,15 +13,10 @@ export default class ControleMeteoros {
         this.gerarMeteoro();
     }
 
-    update() {
-
-    }
-
     gerarMeteoro() {
         this.x = Math.floor(Math.random() * 600) + this.espaco;
-        this.modelo = Math.floor(Math.random() * 3); // + 1
+        this.modelo = Math.floor(Math.random() * 3);
         this.velocidade = Math.random() * 1.9 + 0.2;
-        console.log('velocidade:'+ this.velocidade);
 
         if(this.velocidade < 1){
             this.peso = 300;
@@ -36,7 +28,6 @@ export default class ControleMeteoros {
             this.peso = Math.floor(Math.random() * 10 + 100);
             this.escala = 0.08
         }
-        console.log('escala: '+ this.escala);
         
         this.listaMeteoros.push(
 
@@ -49,7 +40,6 @@ export default class ControleMeteoros {
                 this.peso
             ));
 
-        //console.log(this.listaMeteoros);
         this.espaco += 100;
     }
     seMeteoroSairDaTela(meteoro) {

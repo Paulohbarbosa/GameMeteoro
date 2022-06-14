@@ -10,9 +10,7 @@ export default class ControleProjeteis {
     constructor() {
         this.somTiro = new Audio('./src/sounds/tiro.wav');
         this.somTiro.volume = 0.05;
-
     }
-
 
     tiro(x, y, velocidade, atraso, dano) {
 
@@ -35,7 +33,6 @@ export default class ControleProjeteis {
                 this.projeteis.splice(index, 1);
             }
             projetil.draw(c);
-            //console.log(this.projeteis);
         })
     }
 

@@ -12,7 +12,7 @@ export default class Meteoro {
 
         //imagens
         const image = new Image();
-        image.src = './src/imgs/cometa2.png'
+        image.src = './src/imgs/cometa.png'
 
         image.onload = () => {
 
@@ -34,14 +34,10 @@ export default class Meteoro {
             this.aCPosY = (this.pTelaY - (this.pTelaY + this.altura / 3)) + (this.recuo / 2);
             this.aCLargura = this.largura - this.recuo;
             this.aCAltura = (this.altura / 3) - this.recuo;
-
-            
         }
 
         this.somExplosao = new Audio('./src/sounds/explosao.mp3');
         this.somExplosao.volume = 0.1;
-
-        this.raio = (400 / 2) * this.escala;
     }
 
     draw(c) {
@@ -69,7 +65,6 @@ export default class Meteoro {
         //area do desenho
        //this.quadrado(c,'white',this.pTelaX, this.pTelaY, this.largura, this.altura);
        
-
         //movimento do cometa
         this.pTelaY += this.velocidade;
         this.aCPosY += this.velocidade;
@@ -91,13 +86,11 @@ export default class Meteoro {
     }
 
     info(c) {
-
         //texto do peso do meteoro
         c.fillStyle = 'white'
         c.font = '22px arial';
         c.textAlign = 'center';
         c.textBaseline = 'middle';
         c.fillText(this.peso, this.aCPosX + this.aCLargura/2, this.aCPosY + this.aCAltura /2);
-
     }
 }

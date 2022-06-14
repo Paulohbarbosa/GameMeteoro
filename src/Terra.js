@@ -6,8 +6,6 @@ export default class Terra{
 
         this.velocidade = 10;
 
-        this.rotacao = 0;
-
         const image = new Image();
         image.src = './src/imgs/planeta.png';
 
@@ -23,20 +21,21 @@ export default class Terra{
     draw(c) {
 
         if (this.image) {
-            c.drawImage(this.image, this.x - (this.largura / 2), this.y - (this.altura / 2), this.largura, this.altura);
+            c.drawImage(
+                this.image, 
+                this.x - (this.largura / 2), 
+                this.y - (this.altura / 2), 
+                this.largura, this.altura
+            );
         }
-
     }
 
     update() {
-
         if (this.y <= 1050) {
             this.altura += 12;
             this.largura += 12;
             this.y += this.velocidade;
         }
-
-        //console.log('largura: '+this.largura);
     }
 
 }

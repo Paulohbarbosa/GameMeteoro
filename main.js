@@ -12,7 +12,7 @@ canvas.width = 1200;
 canvas.height = 650;
 
 const background = new Image();
-background.src = './src/imgs/fundo2.png'
+background.src = './src/imgs/fundo.png'
 
 // criar os objetos para acena
 const controleProjetil = new ControleProjeteis();
@@ -27,12 +27,9 @@ let inicioDoJogo = false; //atraso na inicialização
 
 //gameLoop => coração do Jogo
 function gameLoop() {
-
     vocePerdeu();
     if (!game.ativo) return
-
     c.drawImage(background, 0, 0, canvas.width, canvas.height);//estilo do plano de fundo do game
-
     handlerEvents();
 }
 
@@ -42,10 +39,8 @@ let game = {
 }
 
 function handlerEvents() {
-
     //imagem da terra no inicio 
     terra.draw(c);
-
     setTimeout(() => {//contrala o tempo para exibir a imagem
         terra.update();//raliza a animação da terra
 
@@ -55,13 +50,9 @@ function handlerEvents() {
     }, 2000)
 
     if (inicioDoJogo) {
-
         controleProjetil.draw(c);//projetil
-
         player.draw(c);//desenhar o player
-
         controleMeteoro.forEach((controle) => {
-            controle.update()
             controle.listaMeteoros.forEach((meteoro) => {
                 colisaoMeteoro(controle, meteoro);
                 colisaoPlayer(meteoro);
@@ -70,22 +61,20 @@ function handlerEvents() {
     }
 
     if (frames % intervaloTempo === 0) {
-        console.log('tempo: ' + intervaloTempo)
         controleMeteoro.push(new ControleMeteoros());
         if (intervaloTempo >= 500) {
             intervaloTempo -= 50
         }
     }
-
     frames++
 }
 
 function colisaoPlayer(meteoro) {
     if (meteoro.aCPosY + meteoro.aCAltura >= player.pTelaY &&
-        meteoro.aCPosX + meteoro.aCLargura >= player.pTelax &&
+        meteoro.aCPosX + meteoro.aCLargura >= player.pTelaX &&
         meteoro.aCPosY <= player.pTelaY + player.altura &&
-        meteoro.aCPosX <= player.pTelax + player.largura) {
-        console.log("perdeu");
+        meteoro.aCPosX <= player.pTelaX + player.largura && player.intacto) {
+        //console.log("perdeu");
 
         player.somExplosao.currentTime = 0;
         player.somExplosao.play();
@@ -94,23 +83,21 @@ function colisaoPlayer(meteoro) {
 
         setTimeout(() => {
             game.ativo = false;
-        }, 50)
+        }, 2000)
     }
 
 }
 
 function colisaoMeteoro(controle, meteoro) {
-
     //colisão com meteoro ou se ele sair da tela
     if (controleProjetil.colisao(meteoro) || meteoro.pTelaY > canvas.height) {
         if (meteoro.peso <= 0) {
             const index = controle.listaMeteoros.indexOf(meteoro);
             controle.listaMeteoros.splice(index, 1);
-
+            //som de explosão do meteoro
             meteoro.somExplosao.currentTime = 0;
             meteoro.somExplosao.play();
         }
-
     } else {
         meteoro.draw(c);
     }
@@ -118,9 +105,7 @@ function colisaoMeteoro(controle, meteoro) {
 
 function vocePerdeu() {
     if (!game.ativo) {
-
         let texto = 'Você Perdeu!';
-
         c.fillStyle = 'white';
         c.font = '70px Arial';
         c.textAlign = 'center';
