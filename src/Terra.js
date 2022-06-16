@@ -18,13 +18,9 @@ export default class Terra{
             this.largura = image.width * this.escala;
             this.altura = image.height * this.escala;
         }
-
-        //area de colisão
-         this.aCX = this.x - (this.largura / 2) ;
-         this.aCY = this.y - (this.altura / 2) ;
-         this.aCLargura = 800;
-         this.aCAltura= 10;
-         
+         //som do impacto
+         this.somColisao = new Audio('./src/sounds/colisaoTerra.mp3');
+         this.somColisao.volume = 0.5;
     }
 
     draw(c) {
@@ -53,9 +49,7 @@ export default class Terra{
         if (this.y <= 1050) {
             this.altura += 12;
             this.largura += 12;
-            this.recuo += 2;
             this.y += this.velocidade;
-           
         }
     }
 

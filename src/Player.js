@@ -119,7 +119,7 @@ export default class Player {
                 } else if (this.linha >= 0 && this.ir == false) {
                     this.linha++;
                     if (this.linha == 6) {
-                        this.ir = false;
+                        this.ir = true;
                     }
                 } else {
                     this.linha = 6;
@@ -160,7 +160,7 @@ export default class Player {
         c.fillStyle = 'white'
         c.font = '16px arial';
         c.textAlign = 'center';
-        c.textBaseline = 'bootom';
+        c.textBaseline = 'bottom';
         c.fillText(this.energia, this.pTelaX + this.largura/2, this.pTelaY + this.altura + 10);
     }
 

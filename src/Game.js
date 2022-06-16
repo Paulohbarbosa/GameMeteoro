@@ -86,7 +86,6 @@ function colisaoPlayer(controle, meteoro) {
         meteoro.aCPosX + meteoro.aCLargura >= player.pTelaX &&
         meteoro.aCPosY <= player.pTelaY + player.altura &&
         meteoro.aCPosX <= player.pTelaX + player.largura && player.intacto) {
-        //console.log("perdeu");
 
         const pesoMeteoro = meteoro.peso;
         meteoro.peso -= player.energia;
@@ -134,19 +133,11 @@ function colisaoMeteoro(controle, meteoro) {
     }
 }
 
-function caixa(c, cor, x, y, largura, altura) {
-
-    c.strokeStyle = cor
-    c.stroke();
-    c.strokeRect(x, y, largura, altura)
-}
 function colisaoTerra(controle, meteoro) {
     const x = 200;
     const y = 640;
     const largura = 800;
     const altura = 10;
-
-    //caixa(c, 'blue', x,y, largura, altura); 
 
     if (meteoro.aCPosY + meteoro.aCAltura >= y &&
         meteoro.aCPosX + meteoro.aCLargura >= x &&
@@ -154,27 +145,29 @@ function colisaoTerra(controle, meteoro) {
         meteoro.aCPosX <= x + largura) {
 
         if (meteoro.peso <= 100) {
-            console.log('destruição local');
             subPopulacao(1000);
         } else if (meteoro.peso > 100 && meteoro.peso <= 150) {
-            console.log('extinsão parcial n1');
             subPopulacao(10000);
         } else if (meteoro.peso > 150 && meteoro.peso <= 200) {
-            console.log('extinsão parcial n2');
             subPopulacao(100000);
         } else if (meteoro.peso > 200 && meteoro.peso <= 250) {
-            console.log('extinsão parcial n3');
-            subPopulacao(10000000);
+            subPopulacao(1000000);
         } else if (meteoro.peso > 250 && meteoro.peso <= 300) {
-            console.log('extinsão total');
+            subPopulacao(10000000);
+        }else if (meteoro.peso > 300 && meteoro.peso <= 350) {
+            subPopulacao(100000000);
+        }else if (meteoro.peso > 350 && meteoro.peso <= 400) {
+            subPopulacao(1000000000);
+        }else if (meteoro.peso > 450) {
             subPopulacao(7999999999);
         }
 
         const index = controle.listaMeteoros.indexOf(meteoro);
         controle.listaMeteoros.splice(index, 1);
-       
 
-       
+        terra.somColisaocurrentTime = 0;
+        terra.somColisao.play();
+
     }
 }
 function subPopulacao(valor) {
@@ -197,8 +190,6 @@ function evolucaoPlayer(){
         player.energia += 100;
         player.dano += 5
         evo = 0;
-
-        console.log("Player evoluio")
     }
 }
 

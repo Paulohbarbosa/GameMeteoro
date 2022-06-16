@@ -3,10 +3,9 @@ import Projetil from './Projetil.js';
 export default class ControleProjeteis {
     projeteis = [];
     atrasoNoTiro = 0;
-    constructor(scoreEl) {
+    constructor() {
         this.somTiro = new Audio('./src/sounds/tiro.wav');
         this.somTiro.volume = 0.05;
-        this.scoreEl =scoreEl;
     }
 
     tiro(x, y, velocidade, atraso, dano) {

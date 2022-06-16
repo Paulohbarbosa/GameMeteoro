@@ -21,11 +21,11 @@ export default class Meteoro {
             this.recorteX= this.meteoro[this.posicao];
             this.recorteY= 0;
             this.tRecorteX = 450;
-            this.tRecorteY = 1200;
+            this.tRecorteY = 1206;
 
             this.largura = (this.tRecorteX * this.escala) 
-            this.altura = (this.tRecorteY * this.escala) 
-
+            this.altura = (this.tRecorteY * this.escala)
+            
             this.pTelaY = this.poTelaY - this.altura
 
             //area do desenho para a colisão

@@ -13,19 +13,22 @@ export default class ControleMeteoros {
     }
 
     gerarMeteoro() {
-        this.x = Math.floor(Math.random() * 600);
+        this.x = Math.floor(Math.random() * 1000);
         this.modelo = Math.floor(Math.random() * 3);
-        this.velocidade = Math.random() * 1.9 + 0.2;
+        this.velocidade = Math.random() * 2 + 0.2;
 
-        if (this.velocidade < 1) {
-            this.peso = 300;
+        if (this.velocidade < 0.5) {
+            this.peso = Math.floor(Math.random() * 500 + 300);
+            this.escala = Math.random() * 0.9 + 0.2;
+        }else if (this.velocidade < 1) {
+            this.peso = Math.floor(Math.random() * 300 + 200);
             this.escala = Math.random() * 0.09 + 0.2;
         } else if (this.velocidade > 1 && this.velocidade < 1.5) {
             this.peso = Math.floor(Math.random() * 10 + 200);
-            this.escala = Math.random() * 0.05 + 0.15
+            this.escala = Math.random() * 0.08 + 0.15
         } else {
             this.peso = Math.floor(Math.random() * 10 + 100);
-            this.escala = 0.04
+            this.escala = 0.07
         }
 
         this.listaMeteoros.push(
